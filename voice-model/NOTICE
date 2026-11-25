@@ -1,0 +1,5 @@
+Kokoro-82M v1.0 ONNX
+Copyright Kokoro contributors, licensed under Apache License 2.0.
+Source: https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX
+Memo combines the af_sky, af_bella and af_nicole voice embeddings at inference time.
+The bundled model and source embeddings are unchanged.

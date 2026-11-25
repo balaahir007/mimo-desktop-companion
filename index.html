@@ -1,0 +1,190 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'none'"><link rel="stylesheet" href="style.css"><title>Mimo</title></head><body><header><span class="brand">Mimo</span><nav aria-label="Workspace"><button data-view="agent" aria-pressed="true">Agent</button><button data-view="home" aria-pressed="false">Reminders</button><button data-view="actions">Actions</button><button data-view="workflows">Workflows</button><button data-view="studio">Avatar studio</button></nav></header><main id="agent">
+  <section class="agent-hero">
+    <div>
+      <h1>Ask Memo</h1>
+      <p>Describe a task. Review the steps. Run the ones you choose.</p>
+      <div class="agent-voice-controls">
+        <button id="talkToMimo" type="button">Talk to Mimo</button>
+        <span id="homeWakeStatus" role="status"></span>
+      </div>
+    </div>
+    <div id="agentAvatar" class="avatar"></div>
+  </section>
+  <div class="agent-layout">
+    <div>
+      <section class="panel agent-composer" aria-label="Task">
+        <form id="agentForm">
+          <label for="agentPrompt">What would you like to do?</label>
+          <textarea id="agentPrompt" rows="4" maxlength="4000" required placeholder="For example, draft a study plan, then open my Notes folder."></textarea>
+          <button id="agentPlan" class="primary">Create plan</button>
+        </form>
+        <p id="agentStatus" role="status"></p>
+      </section>
+      <section id="agentPlanPanel" class="panel" hidden>
+        <h2>Plan</h2>
+        <ol id="agentNodes"></ol>
+        <div class="agent-actions">
+          <button id="agentRun" class="primary">Run selected nodes</button>
+          <button id="agentStop" hidden>Stop run</button>
+        </div>
+      </section>
+      <section id="agentAnswer" class="panel" aria-live="polite" hidden>
+        <h2>Memo’s reply</h2>
+        <p id="agentAnswerText"></p>
+        <button id="agentRead">Read aloud</button>
+      </section>
+    </div>
+    <aside>
+      <section class="panel agent-capabilities">
+        <h2>Capabilities</h2>
+        <div id="agentTools"></div>
+      </section>
+      <details id="agentConnection" class="panel agent-connection">
+        <summary>Model connection</summary>
+        <div id="agentProviders" class="agent-actions" role="group" aria-label="Model provider"></div>
+        <p id="agentConnectionStatus"></p>
+        <form id="agentKeyForm">
+          <label for="agentKey">API key</label>
+          <input id="agentKey" type="password" autocomplete="off" maxlength="500" required>
+          <div class="agent-actions">
+            <button>Save key</button><button id="agentDisconnect" type="button" hidden>Disconnect</button>
+          </div>
+        </form>
+      </details>
+      <section class="panel agent-memory">
+        <h2>Memory</h2>
+        <label><input id="agentMemory" type="checkbox"> Remember completed replies</label>
+        <p id="agentMemoryStatus">Keeps turns on this PC and shares up to four when creating a plan.</p>
+        <button id="agentForget">Clear memory</button>
+      </section>
+    </aside>
+  </div>
+</main><main id="home" hidden><p class="date" id="date"></p><p id="schedulerStatus" role="status" hidden></p><section class="heading"><h1>Reminders</h1><button id="add" class="primary">+ New reminder</button></section><section class="quick"><div id="mini" class="avatar"></div><div><h2>Quick reminder</h2><form id="commandForm"><input id="command" aria-label="Reminder command" placeholder="Review notes in 10 minutes" maxlength="160" required><button>Review</button></form></div></section><nav aria-label="Filter reminders"><button data-filter="active" aria-pressed="true">Active</button><button data-filter="completed" aria-pressed="false">Completed</button></nav><section id="list" aria-live="polite"></section></main><main id="studio" hidden><h1>Avatar studio</h1><section class="panel studio-character">
+  <div class="studio-preview">
+    <div id="preview" class="avatar"></div>
+    <div class="studio-moves" aria-label="Play an avatar move">
+      <button type="button" data-move="Dance">Dance</button>
+      <button type="button" data-move="Jump">Jump</button>
+      <button type="button" data-move="Wave">Wave</button>
+    </div>
+  </div>
+  <div>
+    <h2>Choose a character</h2>
+    <div id="avatarChoices" class="avatar-choices" role="group" aria-label="Avatar character"></div>
+  </div>
+</section>
+<section class="panel">
+  <h2>Make it yours</h2>
+  <div class="studio-custom">
+    <div><h3>Color</h3><div id="avatarColors" role="group" aria-label="Body color"></div></div>
+    <div><h3>Expression</h3><div id="avatarFaces" role="group" aria-label="Expression"></div></div>
+    <div><h3>Accessory</h3><div id="avatarAccessories" role="group" aria-label="Accessory"></div></div>
+    <div><h3>Size</h3><div id="avatarSizes" role="group" aria-label="Avatar size"></div></div>
+  </div>
+  <label for="action">Reminder move</label><select id="action"></select>
+  <button id="play">Play reminder move</button>
+</section>
+<section class="panel"><h2>Companion voice</h2><label><input id="speech" type="checkbox"> Speak during conversations and reminders</label><div class="fields"><label>Voice<select id="voice"></select></label><label>Speed<select id="rate"></select></label><label>Volume<input id="volume" type="range" min="0" max="100" step="5"></label></div><button id="sample">Test voice</button> <button id="stop">Stop audio</button><p id="studioVoiceStatus" role="status" hidden></p></section><section class="panel"><h2>Voice activation</h2><label><input id="recognition" type="checkbox"> Allow microphone during conversations and reminder replies</label><label><input id="wake" type="checkbox"> Listen for “Hey Mimo” while Mimo runs in the tray</label><p class="setting-help">Voice wake keeps the microphone on between conversations and listens locally for the wake phrase. Say “Close Mimo” once the avatar is listening. It will say goodbye and hide. Turn off voice wake in the tray menu whenever you like.</p><p id="wakeStatus" role="status" hidden></p><div class="fields"><label>Avatar name<input id="name" maxlength="24"></label><label>Talk shortcut<input id="shortcut" maxlength="60" autocomplete="off" spellcheck="false"></label><label>Stop audio shortcut<input id="stopShortcut" maxlength="60" autocomplete="off" spellcheck="false"></label></div><p class="setting-help">Use combinations like Ctrl+Alt+Space. While listening, say “Hey <span id="wakeName">Mimo</span>” before a request.</p><p id="shortcutStatus" role="status" hidden></p><p id="settingStatus" role="status" hidden></p></section></main><main id="actions" hidden>
+  <h1>Actions</h1>
+  <div class="action-layout">
+    <section class="panel" aria-label="Pinned actions">
+      <h2>Pinned actions</h2>
+      <div id="actionList" role="group" aria-label="Choose an action"></div>
+      <details class="new-pin">
+        <summary>Add a pin</summary>
+        <div class="action-buttons"><button id="pinFolder">Choose folder</button><button id="pinApp">Choose app</button></div>
+        <form id="pinSiteForm">
+          <label>Website name<input id="siteName" maxlength="60" required></label>
+          <label>HTTPS address<input id="siteUrl" type="url" maxlength="2000" required placeholder="https://"></label>
+          <button>Add website</button>
+        </form>
+      </details>
+    </section>
+    <section class="panel" aria-labelledby="actionTitle">
+      <h2 id="actionTitle">ChatGPT</h2>
+      <p id="actionDetails" class="setting-help"></p>
+      <div id="actionCompose">
+        <div class="action-buttons">
+          <button id="giveText" aria-pressed="true">Give text</button>
+          <button id="giveComment" aria-pressed="false">Give a comment</button>
+        </div>
+        <label><span id="draftLabel">Text</span><textarea id="actionText" rows="5" maxlength="8000"></textarea></label>
+      </div>
+      <div class="action-buttons">
+        <button id="runAction" class="primary">Open website</button>
+        <button id="sendAction" hidden>Send via API</button>
+        <button id="removeAction" hidden>Remove pin</button>
+      </div>
+      <details id="actionConnection">
+        <summary>Cloud connection</summary>
+        <p class="setting-help">API requests send your text to the selected provider and may use your account’s API credits.</p>
+        <p id="connectionStatus"></p>
+        <form id="keyForm">
+          <label>API key<input id="actionKey" type="password" autocomplete="off" maxlength="500" required></label>
+          <button>Save API key</button>
+          <button id="forgetKey" type="button" hidden>Disconnect</button>
+        </form>
+      </details>
+      <p id="actionStatus" role="status"></p>
+      <section id="actionReply" hidden aria-live="polite">
+        <h3>Reply</h3>
+        <div id="replyText"></div>
+      </section>
+    </section>
+  </div>
+</main><main id="workflows" hidden>
+  <h1>Workflows</h1>
+  <div class="action-layout">
+    <section class="panel">
+      <h2>Saved workflows</h2>
+      <div id="workflowList" role="group" aria-label="Choose a workflow"></div>
+      <button id="workflowNew">New workflow</button>
+      <details id="workflowConnection">
+        <summary>n8n connection</summary>
+        <form id="workflowConnectionForm">
+          <label>Webhook URL<input id="workflowUrl" type="url" maxlength="2000" required placeholder="https://…/webhook/…"></label>
+          <label>Authentication header<input id="workflowHeader" value="X-Mimo-Key" maxlength="60" required></label>
+          <label>Webhook key<input id="workflowKey" type="password" maxlength="1000" autocomplete="off"></label>
+          <div class="action-buttons">
+            <button>Save connection</button>
+            <button id="workflowDisconnect" type="button">Disconnect</button>
+          </div>
+        </form>
+        <p id="workflowConnectionStatus" class="setting-help" role="status"></p>
+        <button id="workflowExport" type="button">Save n8n starter template</button>
+      </details>
+    </section>
+    <section class="panel" aria-labelledby="workflowTitle">
+      <h2 id="workflowTitle">Open Documents</h2>
+      <section id="workflowReview">
+        <ol id="workflowSteps"></ol>
+        <label id="workflowInputLabel">Workflow input<textarea id="workflowInput" rows="4" maxlength="8000"></textarea></label>
+        <div class="action-buttons">
+          <button id="workflowRun" class="primary">Run workflow</button>
+          <button id="workflowStop" hidden>Stop run</button>
+          <button id="workflowEdit" hidden>Edit</button>
+          <button id="workflowRemove" hidden>Remove</button>
+        </div>
+      </section>
+      <form id="workflowEditor" hidden>
+        <label>Workflow name<input id="workflowName" maxlength="70" required></label>
+        <div id="workflowEditorSteps"></div>
+        <div class="action-buttons">
+          <button id="workflowAddStep" type="button">Add step</button>
+          <button class="primary">Save workflow</button>
+          <button id="workflowCancelEdit" type="button">Cancel</button>
+        </div>
+      </form>
+      <p id="workflowStatus" role="status"></p>
+      <section id="workflowResult" hidden aria-live="polite">
+        <h3>Latest run</h3>
+        <ol id="workflowResultSteps"></ol>
+        <pre id="workflowReply" hidden></pre>
+      </section>
+      <details id="workflowHistoryPanel">
+        <summary>Run history</summary>
+        <ul id="workflowHistory"></ul>
+      </details>
+    </section>
+  </div>
+</main><dialog><form><h2 id="formTitle">New reminder</h2><label>What would you like to remember?<input id="title" maxlength="160" required></label><label>Local date and time<input id="due" type="datetime-local" required></label><footer><button type="button" id="cancel">Cancel</button><button class="primary">Save reminder</button></footer></form></dialog><script src="avatar.js"></script><script src="dashboard.js"></script><script src="studio.js"></script><script src="actions-ui.js"></script><script src="workflows-ui.js"></script><script src="agent-ui.js"></script></body></html>

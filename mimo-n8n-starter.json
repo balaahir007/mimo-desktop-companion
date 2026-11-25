@@ -1,0 +1,47 @@
+{
+  "name": "Mimo Webhook Starter",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mimo-agent",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "13bc5f5c-e8e5-406b-9c82-54c613d67d91",
+      "name": "Mimo POST",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "38b06650-1e47-4a34-9a5c-e3ba66def184"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { reply: 'Mimo reached n8n.', continue: true, runId: $json.body.runId } }}",
+        "options": {}
+      },
+      "id": "79c7cbdb-9fa0-4d93-9d5c-17b56aa3fb25",
+      "name": "Reply to Mimo",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [280, 0]
+    }
+  ],
+  "connections": {
+    "Mimo POST": {
+      "main": [
+        [
+          {
+            "node": "Reply to Mimo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

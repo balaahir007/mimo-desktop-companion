@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'none'">
+  <link rel="stylesheet" href="style.css">
+  <title>Mimo companion</title>
+</head>
+<body class="widget">
+  <section id="bubble" aria-label="Companion conversation" hidden>
+    <div class="bubble-head">
+      <span id="companionName">Mimo</span>
+      <span id="activity"><span class="meter" aria-hidden="true"><i></i><i></i><i></i></span><span id="activityText"></span></span>
+    </div>
+    <div class="bubble-message">
+      <div id="alertTitle" hidden></div>
+      <p id="message" aria-live="polite"></p>
+      <p id="modelText" hidden></p>
+      <p id="transcript" hidden></p>
+      <div id="draftDetails" hidden></div>
+      <p id="voiceStatus" role="status"></p>
+    </div>
+    <div id="consent" hidden>
+      <p>Allow microphone access during conversations and reminder replies? Windows processes your speech on this device.</p>
+      <button id="allowMic" class="primary">Enable microphone</button>
+      <button id="useTyping">Use typing</button>
+    </div>
+    <form id="turnForm" hidden>
+      <input id="turnInput" aria-label="Your response" autocomplete="off" maxlength="800" placeholder="Type a response…" required>
+      <button type="submit" class="primary">Send</button>
+    </form>
+    <div id="confirmActions" class="bubble-actions" hidden>
+      <button id="confirmTurn" class="primary">Confirm</button>
+      <button id="editTurn">Edit</button>
+    </div>
+    <div id="alertActions" class="bubble-actions" hidden>
+      <button id="completeTurn" class="primary">Done</button>
+      <button id="snoozeTurn">Snooze 10 min</button>
+      <button id="dismissTurn">Dismiss</button>
+    </div>
+    <div class="bubble-actions utility">
+      <button id="stopAudio" hidden>Stop audio</button>
+      <button id="startMic" hidden>Try microphone</button>
+      <button id="cancelTurn" hidden>Close</button>
+    </div>
+  </section>
+  <button id="pet" aria-label="Open Mimo, or drag to move"><span class="avatar" id="widgetAvatar"></span><span id="spark" aria-hidden="true">✦</span></button>
+  <script src="avatar.js"></script>
+  <script src="widget.js"></script>
+</body>
+</html>

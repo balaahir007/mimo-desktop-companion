@@ -1,0 +1,23 @@
+{
+  "name": "mimo-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline desktop reminder companion",
+  "main": "desktop.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test store.test.cjs reminder-language.test.cjs actions.test.cjs workflows.test.cjs agent.test.cjs",
+    "test:desktop": "electron desktop.test.cjs",
+    "package:win": "node package-win.cjs",
+    "test:actions-desktop": "electron actions-desktop.test.cjs",
+    "test:workflows-desktop": "electron workflows-desktop.test.cjs",
+    "test:agent-desktop": "electron agent-desktop.test.cjs"
+  },
+  "devDependencies": {
+    "electron": "39.2.0"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "3.8.1",
+    "kokoro-js": "1.2.1"
+  }
+}
